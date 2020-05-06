@@ -1,0 +1,57 @@
+[tower]
+#localhost ansible_connection=local
+tower1.f52c.internal
+tower2.f52c.internal
+tower3.f52c.internal
+#tower2
+#tower3
+
+[database]
+support1.f52c.internal
+
+[isolated_group_ThreeTierApp]
+bastion.a398.example.opentlc.com ansible_user='ec2-user' ansible_ssh_private_key_file='~/.ssh/isolated.pem'
+
+[isolated_group_ThreeTierApp:vars]
+controller=tower
+
+[all:vars]
+admin_password='R3dh4t1'
+become=true
+
+pg_host='support1.f52c.internal'
+pg_port='5432'
+
+pg_database='awx'
+pg_username='awx'
+pg_password='R3dh4t2'
+pg_sslmode='prefer'  # set to 'verify-full' for client-side enforced SSL
+
+rabbitmq_username=tower
+rabbitmq_password='R3dh4t3'
+rabbitmq_cookie=cookiemonster
+
+# Isolated Tower nodes automatically generate an RSA key for authentication;
+# To disable this behavior, set this value to false
+# isolated_key_generation=true
+
+
+# SSL-related variables
+
+# If set, this will install a custom CA certificate to the system trust store.
+# custom_ca_cert=/path/to/ca.crt
+
+# Certificate and key to install in nginx for the web UI and API
+# web_server_ssl_cert=/path/to/tower.cert
+# web_server_ssl_key=/path/to/tower.key
+
+# Use SSL for RabbitMQ inter-node communication.  Because RabbitMQ never
+# communicates outside the cluster, a private CA and certificates will be
+# created, and do not need to be supplied.
+# rabbitmq_use_ssl=False
+
+# Server-side SSL settings for PostgreSQL (when we are installing it).
+# postgres_use_ssl=False
+# postgres_ssl_cert=/path/to/pgsql.crt
+# postgres_ssl_key=/path/to/pgsql.key
+
