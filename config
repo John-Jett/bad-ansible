@@ -1,0 +1,14 @@
+Host *f52c.internal
+IdentityFile ~/.ssh/f52ckey.pem
+User ec2-user
+StrictHostKeyChecking no
+
+Host *661f*
+IdentityFile ~/.ssh/cloudkey.pem
+User cloud-user
+StrictHostKeyChecking no
+
+Host *a398*
+IdentityFile ~/.ssh/three_tier.pem
+User ec2-user
+StrictHostKeyChecking no
